@@ -1,73 +1,0 @@
-<!DOCTYPE html>
-<html lang="fa">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>فروشگاه آنلاین</title>
-</head>
-<body>
-
-    <h2>لیست محصولات</h2>
-
-    <div class="product" data-id="1" data-name="محصول ۱" data-price="100">
-        <p>محصول ۱ - قیمت: 100 تومان</p>
-        <button class="add-to-cart">افزودن به سبد</button>
-    </div>
-
-    <div class="product" data-id="2" data-name="محصول ۲" data-price="200">
-        <p>محصول ۲ - قیمت: 200 تومان</p>
-        <button class="add-to-cart">افزودن به سبد</button>
-    </div>
-
-    <div class="product" data-id="3" data-name="محصول ۳" data-price="300">
-        <p>محصول ۳ - قیمت: 300 تومان</p>
-        <button class="add-to-cart">افزودن به سبد</button>
-    </div>
-
-    <br>
-    <button id="cart-icon">🛒 سبد خرید</button>
-
-    <script>
-        // بررسی اگر در لوکال‌استوریج چیزی هست، آن را دریافت کن
-        let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-        // اضافه کردن محصول به سبد خرید
-        document.querySelectorAll(".add-to-cart").forEach(button => {
-            button.addEventListener("click", (event) => {
-                let product = event.target.closest(".product");
-                let productId = product.dataset.id;
-                let productName = product.dataset.name;
-                let productPrice = product.dataset.price;
-
-                // بررسی اگر محصول قبلاً اضافه شده، فقط تعداد را افزایش دهد
-                let existingProduct = cart.find(item => item.id === productId);
-                if (existingProduct) {
-                    existingProduct.quantity++;
-                } else {
-                    cart.push({
-                        id: productId,
-                        name: productName,
-                        price: productPrice,
-                        quantity: 1
-                    });
-                }
-
-                // ذخیره در localStorage
-                localStorage.setItem("cart", JSON.stringify(cart));
-
-                alert(`${productName} به سبد خرید اضافه شد!`);
-            });
-        });
-
-        // هدایت به صفحه خرید
-        document.getElementById("cart-icon").addEventListener("click", () => {
-            if (cart.length === 0) {
-                alert("سبد خرید شما خالی است!");
-            } else {
-                window.location.href = "checkout.html";
-            }
-        });
-    </script>
-
-</body>
-</html>
